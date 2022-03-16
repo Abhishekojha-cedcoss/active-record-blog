@@ -60,7 +60,7 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
-        <a class="nav-link px-3" href="<?php echo URLROOT?>'pages/login">Sign out</a>
+        <a class="nav-link px-3" href="<?php echo  $settings['siteurl']?>'pages/login">Sign out</a>
       </div>
     </div>
   </header>
@@ -77,15 +77,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo URLROOT ?>pages/adminHome">
+              <a class="nav-link" href="<?php echo URLROOT?>pages/adminHome">
                 <span data-feather="shopping-cart"></span>
                 Blogs
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="bar-chart-2"></span>
-                Reports
               </a>
             </li>
           </ul>
@@ -116,16 +110,16 @@
       ';
             foreach ($data as $k => $v) {
                 $html .= '<tr>
-        <td>' . $v["user_id"] . '</td>
-        <td>' . $v["username"] . '</td>
-        <td>' . $v["firstName"] . '</td>
-        <td>' . $v["lastname"] . '</td>
-        <td>' . $v["Status"] . '<form method="POST"><input type="hidden"
-         name="id" value="' . $v["user_id"] . '"><button type="submit" name="submit"
+        <td>' . $v->user_id . '</td>
+        <td>' . $v->username. '</td>
+        <td>' . $v->firstname . '</td>
+        <td>' . $v->lastname . '</td>
+        <td>' . $v->status . '<form method="POST"><input type="hidden"
+         name="id" value="' . $v->user_id . '"><button type="submit" name="submit"
           class="submit" style="display:none">Change</button></form></td>
         <td><a href="#" class="userEdit">Edit </a>
         <form action="" method="POST">
-        <input type="hidden" name="del" value="' . $v["user_id"] . '">
+        <input type="hidden" name="del" value="' . $v->user_id . '">
         <button type="submit" name="submit1"> Delete</button></form></td>
         </tr>';
             }
@@ -146,7 +140,7 @@
   <script src="<?php echo URLROOT?>node_modules/bootstrap/dist/js/bootstrap.bundle.js" 
   integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
   crossorigin="anonymous"></script>
-  <script src="<?php echo URLROOT?>assets/js/script1.js"> </script>
+  <script src="<?php echo URLROOT?>assets/js/adminscript.js"> </script>
 </body>
 
 </html>

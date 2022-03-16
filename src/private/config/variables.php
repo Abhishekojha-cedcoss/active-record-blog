@@ -13,3 +13,4 @@ define('URLROOT', 'http://localhost:8080/');
 
 //Sitename
 define('SITENAME', 'MVC Framework');
+

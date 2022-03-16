@@ -14,12 +14,6 @@ class Controller
                 'development' => 'mysql://root:secret@mysql-server/blog'));
         });
 
-        /* require_once 'Log.php';
-
-        $log = \Log::singleton('file', APPPATH . '/../private/logs/sql.log'); //using PEAR Log
-        \ActiveRecord\Config::instance()->set_logging(true);
-        \ActiveRecord\Config::instance()->set_logger($log); */
-
         require_once(APPPATH . '/../private/models/' . $model . '.php');
 
         $model = '\\App\\Models\\'. $model;

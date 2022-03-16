@@ -17,6 +17,7 @@ class Pages extends Controller
     }
     public function login()
     {
+        $_SESSION["user"]??array();
         $result="";
         if (isset($_POST["submit"])) {
             $result="Wrong email or password!";
@@ -27,9 +28,13 @@ class Pages extends Controller
             foreach ($result as $user) {
                 if (($user->email == $email) && ($user->password == $password) && ($user->status == 'approved') &&
                  ($user->role == 'user')) {
+                    $_SESSION["user"]=array("id"=>$user->user_id, "email"=>$user->email, "role"=>$user->role,
+                     "status"=>$user->status);
                     header("location: userdash");
                 } elseif (($user->email == $email) && ($user->password == $password) &&
                 ($user->status == 'approved') && ($user->role == 'admin')) {
+                    $_SESSION["user"]=array("id"=>$user->user_id, "email"=>$user->email, "role"=>$user->role,
+                    "status"=>$user->status);
                     header("location: adminHome");
                 } elseif (($user->email == $email) && ($user->password == $password) &&
                 ($user->status == 'pending') && ($user->role == 'user')) {
@@ -104,7 +109,6 @@ class Pages extends Controller
             $bname=$_POST["bname"];
             $description=$_POST["description"];
             $image=$_POST["image"];
-            // $this->blogModel->updateBlog($id, $bname, $description, $image);
             $result=$this->blogModel::find(array('blog_id'=>$id));
             $result->blog_name=$bname;
             $result->blog_description=$description;
@@ -112,5 +116,42 @@ class Pages extends Controller
             $result->save();
             header("location:adminHome");
         }
+    }
+    public function addNewBlog()
+    {
+        if (isset($_POST["add"])) {
+            $userid=$_SESSION["user"]["id"];
+            $bname=$_POST["bname"];
+            $description=$_POST["description"];
+            $image=$_POST["image"];
+            $this->blogModel->user_id= $userid;
+            $this->blogModel->blog_name= $bname;
+            $this->blogModel->blog_description= $description;
+            $this->blogModel->blog_image= $image;
+            $this->blogModel->save();
+            header("location: adminHome");
+        }
+        $this->view('pages/admin/addNewBlog');
+    }
+    public function admindash()
+    {
+       
+        if (isset($_POST["submit"])) {
+            $id = $_POST["id"];
+            $res=$this->userModel::find(array('user_id'=>$id));
+            $status=$res->status;
+            if ($status=="approved") {
+                $res->status="pending";
+            } else {
+                $res->status="approved";
+            }
+            $res->save();
+        }
+        if (isset($_POST["submit1"])) {
+            $id1 = $_POST["del"];
+            $this->userModel->table()->delete(array('user_id' => array($id1)));
+        }
+        $result=$this->userModel::find("all");
+        $this->view('pages/admin/admindash', $result);
     }
 }
