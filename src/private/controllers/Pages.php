@@ -44,6 +44,9 @@ class Pages extends Controller
                 } elseif (($user->email == $email) && ($user->password == $password) &&
                 ($user->status == 'pending') && ($user->role == 'user')) {
                     $result = "You are not approved!";
+                    break;
+                } else {
+                    $result = "Wrong Id or password!!";
                 }
             }
         }

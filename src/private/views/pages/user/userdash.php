@@ -19,6 +19,13 @@
         -moz-user-select: none;
         user-select: none;
       }
+      #intro {
+        background-image: url("https://mdbootstrap.com/img/new/fluid/city/018.jpg");
+        height: 100%;
+      }
+      .mask{
+        margin: 0%;
+      }
 
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
@@ -68,7 +75,7 @@
 
 <main>
 
-  <section class="py-5 text-center container">
+  <section class="py-5 text-center container ">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Blogs</h1>
@@ -79,10 +86,10 @@
     </div>
   </section>
 
-  <div class="album py-5 bg-light">
+  <div class="album py-5 bg-light" id="intro">
 
-
-              <div class="container">
+<div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
+              <div class="container text-white">
               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                   
                             <?php
@@ -92,10 +99,10 @@
                                 $str="".$v->blog_description;
                                 $html.='
                     <div class="col">
-                    <div class="card shadow-sm">
+                    <div class="card-transparent card shadow-sm">
                     <img src="../images/'.$v->blog_image.'" alt="" height="240px">
         
-                    <div class="card-body">
+                    <div class="card-body" style="background-color: rgba(45, 45, 45, 1); ">
                     <h5>'.$v->blog_name.'</h5>
                     <p class="card-text">'.substr($str, 0, 150).'<pre>      ..read more</pre>'.'</p>
                     <div class="d-flex justify-content-between align-items-center">
@@ -121,6 +128,8 @@
           <div class="col-2">
             <a href="<?php echo URLROOT?>pages/myblog" class="btn btn-info">My Blogs</a>
           </div>
+          <br>
+          <br>
   </div>
           </div>
 </div>
