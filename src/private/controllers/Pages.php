@@ -30,7 +30,7 @@ class Pages extends Controller
                     header("location: userdash");
                 } elseif (($user->email == $email) && ($user->password == $password) &&
                 ($user->status == 'approved') && ($user->role == 'admin')) {
-                    header("location: admindash");
+                    header("location: adminHome");
                 } elseif (($user->email == $email) && ($user->password == $password) &&
                 ($user->status == 'pending') && ($user->role == 'user')) {
                     $result = "You are not approved!";
@@ -71,25 +71,46 @@ class Pages extends Controller
         // $result1=$this->blogModel->showAllBlogs();
         // $this->view('pages/userdash', $result1);
     }
-    public function admindash()
+    public function adminHome()
     {
-        echo "hello admin";
-        // if (isset($_POST["submit"])) {
-        //     $id = $_POST["id"];
-        //     $result1=$this->userModel->updateStatus($id);
-        //     foreach ($result1 as $k => $v) {
-        //         if ($v["Status"] == "pending") {
-        //             $this->userModel->statusApproved($id);
-        //         } elseif ($v["Status"] == "approved") {
-        //             $this->userModel->statusPending($id);
-        //         }
-        //     }
-        // }
-        // if (isset($_POST["submit1"])) {
-        //     $id1 = $_POST["del"];
-        //     $this->userModel->deleteUser($id1);
-        // }
-        // $result2=$this->userModel->getAllUsers();
-        // $this->view('pages/admin/dashboard', $result2);
+        if (isset($_POST["delete"])) {
+            $id=$_POST["id"];
+            $this->blogModel::table()->delete(array('blog_id' => array($id)));
+        }
+        $result=$this->blogModel::find("all");
+        $this->view("pages/admin/adminHome", $result);
+    }
+    public function viewBlogAdmin()
+    {
+        if (isset($_POST["submit"])) {
+            $id=$_POST["id"];
+            $result1=$this->blogModel::find("all", array("blog_id"=>$id));
+            $this->view('pages/admin/viewBlogAdmin', $result1);
+        }
+    }
+    public function editBlog()
+    {
+        $arr=array();
+        if (isset($_POST["edit"])) {
+            $pid=$_POST["id"];
+            $name=$_POST["name"];
+            $image=$_POST["image"];
+            $description=$_POST["description"];
+            $arr=array("id"=>$pid,"name"=>$name,"image"=>$image,"description"=>$description);
+            $this->view('pages/admin/editblog', $arr);
+        }
+        if (isset($_POST["update"])) {
+            $id=$_POST["prodID"];
+            $bname=$_POST["bname"];
+            $description=$_POST["description"];
+            $image=$_POST["image"];
+            // $this->blogModel->updateBlog($id, $bname, $description, $image);
+            $result=$this->blogModel::find(array('blog_id'=>$id));
+            $result->blog_name=$bname;
+            $result->blog_description=$description;
+            $result->blog_image=$image;
+            $result->save();
+            header("location:adminHome");
+        }
     }
 }
