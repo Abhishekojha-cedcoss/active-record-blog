@@ -6,4 +6,4 @@
 
     $settings = array();
 
-    $settings['siteurl'] = 'http://localhost:8080/public';
+    $settings['siteurl'] = 'http://localhost:8080/public/';
