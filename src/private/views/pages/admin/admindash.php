@@ -57,7 +57,7 @@
     aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <input class="form-control form-control-dark w-100" id="myInput" type="text" placeholder="Search" aria-label="Search">
     <div class="navbar-nav">
       <div class="nav-item text-nowrap">
         <a class="nav-link px-3" href="<?php echo URLROOT?>'pages/login">Sign out</a>
@@ -97,7 +97,7 @@
             <?php
             
             $html = "";
-            $html .= '<table class="table table-striped table-sm">     
+            $html .= '<table id="myTable"class="table table-striped table-sm">     
         <tr>
           <th scope="col">User Id</th>
           <th scope="col">Username</th>
@@ -141,6 +141,17 @@
   integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
   crossorigin="anonymous"></script>
   <script src="<?php echo URLROOT?>assets/js/adminscript.js"> </script>
+  <script>
+    $(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    // console.log(value);
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+  </script>
 </body>
 
 </html>
